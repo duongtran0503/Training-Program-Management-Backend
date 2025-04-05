@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Date;
+
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder

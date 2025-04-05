@@ -13,14 +13,18 @@ import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINTS_POST = {
-            "/auth/login", "/auth/introspect"
+            "/api/auth/login", "/api/auth/introspect"
     };
     private  final  String[]  PUBLIC_ENDPOINTS_GET = {"/auth/hello"};
 
@@ -32,6 +36,7 @@ public class SecurityConfig {
        httpSecurity.authorizeHttpRequests(request->
                 request.requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS_POST).permitAll()
                         .requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINTS_GET).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/api/auth/login").permitAll()
                         .anyRequest()
                         .authenticated()
                );
@@ -54,5 +59,17 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
+
+    @Bean
+   public  CorsFilter corsFilter() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Loại bỏ khoảng trắng
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Chỉ định các phương thức
+        corsConfiguration.addAllowedHeader("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", corsConfiguration);
+        return  new CorsFilter(source);
+    }
+
 
 }

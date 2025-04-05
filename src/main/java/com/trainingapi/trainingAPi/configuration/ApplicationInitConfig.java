@@ -21,8 +21,8 @@ public class ApplicationInitConfig {
     @Bean
     ApplicationRunner applicationRunner(UserRepository userRepository) {
       return  args -> {
-          if(!userRepository.existsByUsername("3122410062")) {
-              User user = User.builder().username("3122410062").password(passwordEncoder.encode("123")).role("admin").build();
+          if(!userRepository.existsByUsername("admin")) {
+              User user = User.builder().username("admin").password(passwordEncoder.encode("123")).role("admin").build();
               userRepository.save(user);
               log.warn("create  account admin success!");
           }
