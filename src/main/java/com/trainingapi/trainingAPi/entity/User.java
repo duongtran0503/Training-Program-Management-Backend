@@ -9,13 +9,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
+@Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,7 +26,7 @@ public class User {
 
     String password;
 
-    @Column(length = 6)
+    @Column(length = 20)
     String role;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
@@ -37,7 +37,7 @@ public class User {
     Date updateAt;
 
     @CreationTimestamp
-    @Column(updatable = false,nullable = false)
+    @Column(updatable = false, nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     Date createAt;
 }

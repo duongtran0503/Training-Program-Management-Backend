@@ -8,12 +8,14 @@ import org.springframework.http.HttpStatusCode;
 public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION( HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi không xác định",false),
     INVALID_KEY(HttpStatus.BAD_REQUEST, "Lỗi không xác định",false ),
+    DATA_REQUEST_INVALID(HttpStatus.BAD_REQUEST,"Dữ  liệu giửi lên không đúng định dạng!",false),
     USER_EXISTED(HttpStatus.BAD_REQUEST, "Tài khoản đã tồn tại", false),
     USERNAME_INVALID(HttpStatus.BAD_REQUEST, "Tên người dùng không được ngắn hơn {min} ký tự", false),
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "Mật khẩu không được ngắn hơn {min} ký tự", false),
     USER_NOT_EXISTED(HttpStatus.NOT_FOUND, "Người dùng không tồn tại",false ),
     UNAUTHENTICATED(HttpStatus.UNAUTHORIZED, "Không thể xác thực", false),
     UNAUTHORIZED(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập",false ),
+    LECTURER_CODE_EXISTED(HttpStatus.CONFLICT,"Mã giảng viên đã tồn tại",false)
     ;
 
     private HttpStatusCode statusCode;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 @RequiredArgsConstructor
 public class AuthenticationController {
@@ -23,7 +23,11 @@ public class AuthenticationController {
 
      @PostMapping("/login")
      public ApiResponse<AuthenticationResponse> login(@RequestBody LoginRequest request) {
-      return  ApiResponse.<AuthenticationResponse>builder().data(authenticationService.login(request)).build();
+      return  ApiResponse.<AuthenticationResponse>builder().data(authenticationService.login(request))
+              .statusCode(200)
+              .isSuccess(true)
+              .message("OK")
+              .build();
      }
 
 

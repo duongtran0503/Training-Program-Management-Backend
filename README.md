@@ -1,5 +1,5 @@
 # Hướng dẫn chạy dự án Spring Boot
-
+ ***Nhớ nhấn ctrl +alt + L để format code trước khi đầy lên git***
 ## Yêu cầu
 
 * Java 21
