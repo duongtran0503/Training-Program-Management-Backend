@@ -15,7 +15,9 @@ public enum ErrorCode {
     USER_NOT_EXISTED(HttpStatus.NOT_FOUND, "Người dùng không tồn tại",false ),
     UNAUTHENTICATED(HttpStatus.UNAUTHORIZED, "Không thể xác thực", false),
     UNAUTHORIZED(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập",false ),
-    LECTURER_CODE_EXISTED(HttpStatus.CONFLICT,"Mã giảng viên đã tồn tại",false)
+    LECTURER_CODE_EXISTED(HttpStatus.CONFLICT,"Mã giảng viên đã tồn tại",false),
+    COURSE_EXISTED(HttpStatus.CONFLICT,"Học phần đã tồn tại!",false),
+    COURSE_NOT_EXIST(HttpStatus.BAD_REQUEST,"Học phần không tồn tại!",false),
     ;
 
     private HttpStatusCode statusCode;

@@ -41,14 +41,15 @@ public class GlobalExceptionHandler {
     ResponseEntity<ApiResponse<?>> handlingMethodArgumentException(MethodArgumentNotValidException e) {
         String enumKey = Objects.requireNonNull(e.getFieldError()).getDefaultMessage();
         ErrorCode errorCode = ErrorCode.INVALID_KEY;
-
+        String message = enumKey;
         try {
             errorCode =ErrorCode.valueOf(enumKey);
+            message = errorCode.getMessage();
         }
         catch (Exception ignored) {
         }
         return  ResponseEntity.status(errorCode.getStatusCode()).body(ApiResponse.builder()
-                        .message(errorCode.getMessage())
+                        .message(message)
                         .isSuccess(false)
                         .statusCode(errorCode.getStatusCode().value())
                 .build());
