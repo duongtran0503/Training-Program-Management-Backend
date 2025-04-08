@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,8 +27,8 @@ public class Course {
     @Column(columnDefinition ="BOOLEAN DEFAULT TRUE")
     boolean status;
 
-    @OneToOne(mappedBy = "courseCode",cascade = CascadeType.ALL)
-     CourseSyllabus courseSyllabus;
+    @OneToMany(mappedBy = "courseCode", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CourseSyllabus> courseSyllabi;
 
     @ManyToMany
     @JoinTable(name = "prerequisite",

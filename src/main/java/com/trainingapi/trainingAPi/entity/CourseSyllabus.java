@@ -34,15 +34,18 @@ public class CourseSyllabus {
    @Column(columnDefinition = "INT DEFAULT 0")
    int credit;
 
+   @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
+   boolean status;
+
    @OneToOne(mappedBy = "courseSyllabus",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
    @Fetch(FetchMode.JOIN)
    EvaluationComponents evaluationComponents;
 
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name = "course_code", referencedColumnName = "course_code")
-     Course courseCode;
+ @ManyToOne(fetch = FetchType.EAGER)
+ @Fetch(FetchMode.JOIN)
+ @JoinColumn(name = "course_code", referencedColumnName = "course_code")
+ private Course courseCode;
 
  @UpdateTimestamp
  LocalDateTime updateAt;

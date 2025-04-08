@@ -18,6 +18,7 @@ public class CourseSyllabusResponse {
      int theory;
      int practice;
      int credit;
+     boolean status;
      EvaluationComponentsResponse evaluationComponents;
     CourseResponse courseResponse;
      @Data

@@ -7,19 +7,24 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateCourseRequest {
     @NotBlank(message = "Mã khóa học không được để trống")
     @Size(max = 50, message = "Mã khóa học không được vượt quá 10 ký tự")
-    private String courseCode;
+     String courseCode;
 
     @NotBlank(message = "Tên khóa học không được để trống")
     @Size(max = 255, message = "Tên khóa học không được vượt quá 255 ký tự")
-    private String courseName;
+     String courseName;
 
     @Size(max = 1000, message = "Mô tả không được vượt quá 1000 ký tự")
-    private String description;
+     String description;
 
-    private boolean status;
+     boolean status;
+
+     List<String> prerequisites;
+
 }

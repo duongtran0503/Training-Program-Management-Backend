@@ -18,6 +18,7 @@ public enum ErrorCode {
     LECTURER_CODE_EXISTED(HttpStatus.CONFLICT,"Mã giảng viên đã tồn tại",false),
     COURSE_EXISTED(HttpStatus.CONFLICT,"Học phần đã tồn tại!",false),
     COURSE_NOT_EXIST(HttpStatus.BAD_REQUEST,"Học phần không tồn tại!",false),
+    COURSE_SYLLABUS_NOT_EXIST(HttpStatus.BAD_REQUEST,"Đề cương học phần không tồn tại! ",false),
     ;
 
     private HttpStatusCode statusCode;

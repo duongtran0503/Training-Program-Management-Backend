@@ -1,8 +1,6 @@
 package com.trainingapi.trainingAPi.controller;
 
-import com.trainingapi.trainingAPi.dto.request.CreateCourseRequest;
-import com.trainingapi.trainingAPi.dto.request.CreateCourseSyllabusRequest;
-import com.trainingapi.trainingAPi.dto.request.UpdateCourseRequest;
+import com.trainingapi.trainingAPi.dto.request.*;
 import com.trainingapi.trainingAPi.dto.response.ApiResponse;
 import com.trainingapi.trainingAPi.dto.response.CourseResponse;
 import com.trainingapi.trainingAPi.dto.response.CourseSyllabusResponse;
@@ -73,5 +71,45 @@ public class CourseController {
                  .statusCode(200)
                  .data(courseService.getAllCourseSyllabus())
                  .build();
+    }
+
+    @PutMapping("/course-syllabus/{id}")
+    public ApiResponse<CourseSyllabusResponse> updateCourseSyllabus(@Valid @RequestBody UpdateCourseSyllabusRequest request
+    ,@PathVariable String id) {
+        return  ApiResponse.<CourseSyllabusResponse>builder()
+                .isSuccess(true)
+                .statusCode(200)
+                .data(courseService.updateCourseSyllabus(request,id))
+                .build();
+    }
+
+    @DeleteMapping("/course-syllabus/{id}")
+    public ApiResponse<Void> deleteCourseSyllabus(@PathVariable String id) {
+        courseService.deleteCourseSyllabus(id);
+        return  ApiResponse.<Void>builder()
+                .isSuccess(true)
+                .message("OK")
+                .statusCode(200)
+                .build();
+    }
+
+    @PostMapping("/prerequisites/{id}")
+    public ApiResponse<CourseResponse> addPrerequisite(@RequestBody AddPrerequisitesRequest request
+    ,@PathVariable String id) {
+      return  ApiResponse.<CourseResponse>builder()
+              .isSuccess(true)
+              .statusCode(200)
+              .data(courseService.addPrerequisites(id,request))
+              .build();
+    }
+
+    @DeleteMapping("/prerequisites/{id}")
+    public  ApiResponse<CourseResponse> deletePrerequisite(@RequestBody DeletePrerequisitesRequest request
+    ,@PathVariable String id) {
+       return  ApiResponse.<CourseResponse>builder()
+               .isSuccess(true)
+               .statusCode(200)
+               .data(courseService.deletePrerequisite(id,request))
+               .build();
     }
 }
