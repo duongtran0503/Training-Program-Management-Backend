@@ -1,9 +1,11 @@
 package com.trainingapi.trainingAPi.controller;
 
 import com.trainingapi.trainingAPi.dto.request.CreateCourseRequest;
+import com.trainingapi.trainingAPi.dto.request.CreateCourseSyllabusRequest;
 import com.trainingapi.trainingAPi.dto.request.UpdateCourseRequest;
 import com.trainingapi.trainingAPi.dto.response.ApiResponse;
 import com.trainingapi.trainingAPi.dto.response.CourseResponse;
+import com.trainingapi.trainingAPi.dto.response.CourseSyllabusResponse;
 import com.trainingapi.trainingAPi.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -52,5 +54,24 @@ public class CourseController {
                 .isSuccess(true)
                 .data(courseService.updateCourse(request,id))
                 .build();
+    }
+
+    @PostMapping("/course-syllabus/{id}")
+    public ApiResponse<CourseSyllabusResponse> addCourseSyllabus(@Valid @RequestBody CreateCourseSyllabusRequest request
+            , @PathVariable String id) {
+        return ApiResponse.<CourseSyllabusResponse>builder()
+                .isSuccess(true)
+                .statusCode(200)
+                .data(courseService.createCourseSyllabus(request, id))
+                .build();
+    }
+
+    @GetMapping("/course-syllabus")
+    public ApiResponse<List<CourseSyllabusResponse>> getAllCourseSyllabus() {
+         return  ApiResponse.<List<CourseSyllabusResponse>>builder()
+                 .isSuccess(true)
+                 .statusCode(200)
+                 .data(courseService.getAllCourseSyllabus())
+                 .build();
     }
 }

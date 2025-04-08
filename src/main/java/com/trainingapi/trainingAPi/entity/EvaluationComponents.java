@@ -4,34 +4,30 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+@Builder
+public class EvaluationComponents {
+   @Id
+   @GeneratedValue(strategy = GenerationType.UUID)
+   String id;
 
-    @Column(length = 10)
-    String username;
+   String componentName;
 
-    String password;
+   @Column(columnDefinition = "INT DEFAULT 0")
+   int ratio;
 
-    @Column(length = 20)
-    String role;
-
-    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
-    boolean status;
+   @OneToOne
+   @JoinColumn(name = "syllabus_id",referencedColumnName = "syllabus_id")
+    CourseSyllabus courseSyllabus;
 
     @UpdateTimestamp
     LocalDateTime  updateAt;

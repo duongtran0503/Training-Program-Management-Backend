@@ -77,4 +77,5 @@ public class UserService {
         return  lecturerRepository.findAllByName(name).stream().map(userMapper::toLecturerResponse).toList();
 
     }
+
 }

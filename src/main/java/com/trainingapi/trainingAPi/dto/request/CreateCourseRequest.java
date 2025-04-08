@@ -18,9 +18,6 @@ public class CreateCourseRequest {
     @Size(max = 255, message = "Tên khóa học không được vượt quá 255 ký tự")
     private String courseName;
 
-    @NotNull(message = "Số tín chỉ không được để trống")
-    private Integer credits;
-
     @Size(max = 1000, message = "Mô tả không được vượt quá 1000 ký tự")
     private String description;
 

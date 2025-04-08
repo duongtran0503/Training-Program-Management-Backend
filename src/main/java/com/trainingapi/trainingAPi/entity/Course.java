@@ -3,7 +3,11 @@ package com.trainingapi.trainingAPi.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -18,12 +22,11 @@ public class Course {
     @Column(name = "course_code")
     String courseCode;
     String courseName;
-    Integer credits;
     String description;
     @Column(columnDefinition ="BOOLEAN DEFAULT TRUE")
     boolean status;
 
-    @OneToOne(mappedBy = "courseCode",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "courseCode",cascade = CascadeType.ALL)
      CourseSyllabus courseSyllabus;
 
     @ManyToMany
@@ -35,4 +38,13 @@ public class Course {
 
    @ManyToMany(mappedBy = "prerequisites")
     Set<Course> prerequisiteOf;
+
+    @CreationTimestamp
+    @Column(updatable = false, nullable = false)
+    LocalDateTime createAt;
+
+    @UpdateTimestamp
+    LocalDateTime  updateAt;
+
+
 }

@@ -1,5 +1,6 @@
 package com.trainingapi.trainingAPi.dto.response;
 
+import com.trainingapi.trainingAPi.entity.CourseSyllabus;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -13,10 +14,10 @@ import java.util.Set;
 public class CourseResponse {
      String courseCode;
      String courseName;
-     Integer credits;
      String description;
      boolean status;
     Set<PrerequisiteCourseResponse> prerequisites;
+
 
     @Data
     public static class PrerequisiteCourseResponse {
