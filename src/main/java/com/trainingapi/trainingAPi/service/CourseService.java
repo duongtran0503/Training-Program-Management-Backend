@@ -56,6 +56,17 @@ public class  CourseService {
        return  courseRepository.findAll().stream().map(courseMapper::toCourseResponse).toList();
    }
 
+   public  CourseResponse getCourseByCourseCode(String courseCode) {
+        return  courseMapper.toCourseResponse(courseRepository.findById(courseCode)
+                .orElseThrow(()->new AppException(ErrorCode.COURSE_NOT_EXIST)));
+   }
+
+   public List<CourseResponse> getCourseByName(String name) {
+       return courseRepository.searchByKeywordAndActive(name).stream().map(
+               courseMapper::toCourseResponse
+       ).toList();
+   }
+
    public  void deleteCourse(String courseCode) {
       var course = courseRepository.findById(courseCode).orElseThrow(
               ()->new AppException(ErrorCode.COURSE_NOT_EXIST));
@@ -88,6 +99,17 @@ public class  CourseService {
 
    public List<CourseSyllabusResponse> getAllCourseSyllabus() {
        return  courseSyllabusRepository.findAll().stream()
+               .map(courseSyllabusMapper::toCourseSyllabusResponse).toList();
+   }
+
+   public  CourseSyllabusResponse getCourseSyllabusById(String id) {
+       return  courseSyllabusMapper.toCourseSyllabusResponse(courseSyllabusRepository.findById(id)
+               .orElseThrow(()->new AppException(ErrorCode.COURSE_SYLLABUS_NOT_EXIST))
+       );
+   }
+
+   public  List<CourseSyllabusResponse> getCourseSyllabusByName(String name) {
+       return  courseSyllabusRepository.searchCourseSyllabusByNameAndStatusIsTrue(name).stream()
                .map(courseSyllabusMapper::toCourseSyllabusResponse).toList();
    }
 

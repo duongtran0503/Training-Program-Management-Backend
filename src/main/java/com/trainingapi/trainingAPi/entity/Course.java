@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
@@ -39,6 +41,12 @@ public class Course {
 
    @ManyToMany(mappedBy = "prerequisites")
     Set<Course> prerequisiteOf;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "teaching_plan_id", referencedColumnName = "teaching_plan_id")
+    TeachingPlan teachingPlan;
 
     @CreationTimestamp
     @Column(updatable = false, nullable = false)

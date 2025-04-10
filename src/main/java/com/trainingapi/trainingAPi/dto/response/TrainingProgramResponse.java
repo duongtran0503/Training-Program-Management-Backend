@@ -1,47 +1,33 @@
-package com.trainingapi.trainingAPi.entity;
+package com.trainingapi.trainingAPi.dto.response;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TrainingProgram {
-    @Id
+@Builder
+public class TrainingProgramResponse {
     String trainingProgramId;
     String trainingProgramName;
     String educationLevel;
     String degreeType;
     String trainingMode;
+    boolean status;
     int trainingDuration;
     int totalCredits;
     String managingFaculty;
     String teachingLanguage;
-    @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
-    boolean status;
-
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'https://fit.sgu.edu.vn/site/'")
-    String website;
-
     String issuingDecision;
-
-    @UpdateTimestamp
+    String website;
     LocalDateTime updateAt;
-
-    @CreationTimestamp
-    @Column(updatable = false, nullable = false)
     LocalDateTime createAt;
-
-
 }

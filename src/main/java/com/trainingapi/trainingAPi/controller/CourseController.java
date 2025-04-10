@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,24 @@ public class CourseController {
                 .isSuccess(true)
                 .statusCode(200)
                 .data(courseService.getAllCourse())
+                .build();
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<CourseResponse> getCourseByCourseCode(@PathVariable String id) {
+        return  ApiResponse.<CourseResponse>builder()
+                .isSuccess(true)
+                .statusCode(200)
+                .data(courseService.getCourseByCourseCode(id))
+                .build();
+    }
+
+    @GetMapping("/search")
+    public ApiResponse<List<CourseResponse>> searchCourseByName(@RequestParam(name = "name",required = false,defaultValue = "") String name ) {
+        return  ApiResponse.<List<CourseResponse>>builder()
+                .isSuccess(true)
+                .statusCode(200)
+                .data(courseService.getCourseByName(name))
                 .build();
     }
 
@@ -71,6 +90,25 @@ public class CourseController {
                  .statusCode(200)
                  .data(courseService.getAllCourseSyllabus())
                  .build();
+    }
+
+    @GetMapping("/course-syllabus/{id}")
+    public  ApiResponse<CourseSyllabusResponse> getCourseSyllabusById(@PathVariable String id) {
+        return  ApiResponse.<CourseSyllabusResponse>builder()
+                .isSuccess(true)
+                .statusCode(200)
+                .data(courseService.getCourseSyllabusById(id))
+                .build();
+    }
+
+    @GetMapping("/course-syllabus/search")
+    public  ApiResponse<List<CourseSyllabusResponse>> getCourseSyllabusByName(
+            @RequestParam(name = "name",required = false,defaultValue = "") String name) {
+        return  ApiResponse.<List<CourseSyllabusResponse>>builder()
+                .isSuccess(true)
+                .statusCode(200)
+                .data(courseService.getCourseSyllabusByName(name))
+                .build();
     }
 
     @PutMapping("/course-syllabus/{id}")
