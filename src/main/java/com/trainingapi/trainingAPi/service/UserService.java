@@ -58,7 +58,8 @@ public class UserService {
 
     public  LecturerResponse updateLecturer(UpdateLecturerRequest request,String id) {
        var lecturer = lecturerRepository.findById(id).orElseThrow(()->new AppException(ErrorCode.USER_NOT_EXISTED));
-       if(lecturerRepository.existsByLecturerCode(request.getLecturerCode()))
+       if(lecturerRepository.existsByLecturerCode(request.getLecturerCode())
+               & !request.getLecturerCode().equalsIgnoreCase(lecturer.getLecturerCode()))
           throw  new AppException(ErrorCode.LECTURER_CODE_EXISTED);
 
        userMapper.updateLecturerMapper(lecturer,request);
