@@ -12,5 +12,6 @@ public class CreateTeachingPlanRequest {
     String teachingPlanId;
     int semester;
     int academicYear;
+    String trainingProgramId;
     Set<String> courseId;
 }

@@ -7,10 +7,9 @@ import com.trainingapi.trainingAPi.service.TeachingService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/teaches")
@@ -25,6 +24,15 @@ public class TeachingController {
                 .isSuccess(true)
                 .statusCode(200)
                 .data(teachingService.createTeachingPlan(request))
+                .build();
+    }
+
+    @GetMapping
+    public  ApiResponse<List<TeachingPlanResponse>> getAllTeachingPlan() {
+        return  ApiResponse.<List<TeachingPlanResponse>>builder()
+                .isSuccess(true)
+                .statusCode(200)
+                .data(teachingService.getAllTeachingPlan())
                 .build();
     }
 }

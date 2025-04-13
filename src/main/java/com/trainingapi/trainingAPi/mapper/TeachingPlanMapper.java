@@ -12,8 +12,12 @@ public interface TeachingPlanMapper {
     @Mapping(target = "courses",ignore = true)
   TeachingPlan toTeachingPlan(CreateTeachingPlanRequest request);
   @Mappings({
-
+          @Mapping(target = "academicYearString",expression  = "java(formatValurAcademicYear(teachingPlan.getAcademicYear()))"),
           @Mapping(target = "courseResponse",source = "courses")
   })
   TeachingPlanResponse toTeachingPlanResponse(TeachingPlan teachingPlan);
+  default String formatValurAcademicYear(int year) {
+      int nextYear = year +1;
+      return  year + "-" + nextYear;
+  }
 }

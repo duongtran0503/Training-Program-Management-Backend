@@ -43,7 +43,7 @@ public class Course {
     Set<Course> prerequisiteOf;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "teaching_plan_id", referencedColumnName = "teaching_plan_id")
     TeachingPlan teachingPlan;

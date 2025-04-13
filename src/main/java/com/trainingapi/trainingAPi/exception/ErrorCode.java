@@ -22,6 +22,7 @@ public enum ErrorCode {
     COURSE_SYLLABUS_NOT_EXIST(HttpStatus.BAD_REQUEST,"Đề cương học phần không tồn tại! ",false),
     TRAINING_PROGRAM_EXISTED(HttpStatus.BAD_REQUEST,"Đề cương học phần đã tồn tại! ",false),
     TRAINING_PROGRAM_NOT_EXIST(HttpStatus.BAD_REQUEST,"Đề cương học phần không tồn tại! ",false),
+    KNOWLEDGE_BLOCK_EXISED(HttpStatus.BAD_REQUEST,"Đề cương đã tồn tại! ",false),
     TEACHING_PLAN_EXISTED(HttpStatus.CONFLICT,"kế hoạch đào tạo đã tồn tại!",false),
     TEACHING_PLAN_NOT_EXIST(HttpStatus.CONFLICT,"kế hoạch đào tạo không tồn tại!",false),
     ;

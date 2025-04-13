@@ -1,15 +1,11 @@
 package com.trainingapi.trainingAPi.dto.response;
 
-import jakarta.persistence.Column;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.trainingapi.trainingAPi.entity.KnowledgeBlock;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +24,13 @@ public class TrainingProgramResponse {
     String teachingLanguage;
     String issuingDecision;
     String website;
+    List<TeachingPlanResponse> teachingPlanResponses;
+    List<KnowledgeBlock> knowledgeBlocks;
     LocalDateTime updateAt;
     LocalDateTime createAt;
+
+    @Data
+    public  static  class TeachingPlanResponse {
+       private String teachingPlanId;
+    }
 }

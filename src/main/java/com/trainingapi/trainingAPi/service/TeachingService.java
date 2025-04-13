@@ -9,6 +9,7 @@ import com.trainingapi.trainingAPi.exception.ErrorCode;
 import com.trainingapi.trainingAPi.mapper.TeachingPlanMapper;
 import com.trainingapi.trainingAPi.repository.CourseRepository;
 import com.trainingapi.trainingAPi.repository.TeachingPlanRepository;
+import com.trainingapi.trainingAPi.repository.TrainingProgramRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -25,23 +26,32 @@ import java.util.List;
 public class TeachingService {
      TeachingPlanRepository teachingPlanRepository;
      TeachingPlanMapper teachingPlanMapper;
+     TrainingProgramRepository trainingProgramRepository;
      CourseRepository courseRepository;
 
      public TeachingPlanResponse createTeachingPlan(CreateTeachingPlanRequest request) {
         if(teachingPlanRepository.existsById(request.getTeachingPlanId()))
             throw  new AppException(ErrorCode.TEACHING_PLAN_EXISTED);
-         TeachingPlan teachingPlan = teachingPlanMapper.toTeachingPlan(request);
+        var trainingProgram = trainingProgramRepository.findById(request.getTrainingProgramId())
+                .orElseThrow(()->new AppException(ErrorCode.TRAINING_PROGRAM_NOT_EXIST));
+        TeachingPlan teachingPlan = teachingPlanMapper.toTeachingPlan(request);
+         teachingPlan.setTrainingProgram(trainingProgram);
          List<Course> courses = new ArrayList<>();
          if(request.getCourseId()!=null & !request.getCourseId().isEmpty()) {
             request.getCourseId().forEach(courseCode->{
                 var course =  courseRepository.findById(courseCode).orElseThrow(
                         ()->new AppException(ErrorCode.TEACHING_PLAN_NOT_EXIST)
                 );
+                course.setTeachingPlan(teachingPlan);
                 courses.add(course);
             });
 
          }
          teachingPlan.setCourses(courses);
          return  teachingPlanMapper.toTeachingPlanResponse(teachingPlanRepository.save(teachingPlan));
+     }
+
+     public  List<TeachingPlanResponse> getAllTeachingPlan() {
+         return  teachingPlanRepository.findAll().stream().map(teachingPlanMapper::toTeachingPlanResponse).toList();
      }
 }

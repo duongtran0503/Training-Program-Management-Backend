@@ -47,6 +47,7 @@ public class CourseSyllabus {
  @JoinColumn(name = "course_code", referencedColumnName = "course_code")
  private Course courseCode;
 
+
  @UpdateTimestamp
  LocalDateTime updateAt;
 
