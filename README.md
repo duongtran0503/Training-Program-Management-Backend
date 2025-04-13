@@ -1,7 +1,41 @@
 # Hướng dẫn chạy dự án Spring Boot
 
 ***Nhớ nhấn `Ctrl + Alt + L` (hoặc `Command + Option + L` trên macOS) để format code trước khi đẩy lên Git.***
-
+## Mục lục API
+* [Xác thực (Auth)](#xác-thực-auth)
+    * [API đăng nhập](#api-đăng-nhập-login)
+* [Người dùng (User)](#người-dùng-user)
+    * [API tạo giảng viên](#api-tạo-giảng-viên)
+    * [API lấy danh sách giảng viên](#api-lấy-danh-sách-giảng-viên)
+    * [API cập nhật thông tin giảng viên](#api-cập-nhật-thông-tin-giảng-viên)
+    * [API xóa thông tin giảng viên](#api-xóa-thông-tin-giảng-viên)
+    * [API tìm kiếm giảng viên theo tên](#api-tìm-kiếm-giảng-viên-theo-tên)
+* [Khóa học (Course)](#khóa-học-course)
+    * [API lấy tất cả học phần](#api-lấy-tất-cả-học-phần)
+    * [API tạo học phần](#api-tạo-học-phần)
+    * [API cập nhật thông tin học phần](#api-cập-nhật-thông-tin-học-phần)
+    * [API xóa học phần](#api-xóa-học-phần)
+    * [API lấy học phần theo mã học phần](#api-lấy-học-phần-theo-mã-học-phần)
+    * [API tìm kiếm học phần theo tên](#api-tìm-kiếm-học-phần-theo-tên)
+    * [API thêm đề cương học phần](#api-thêm-đề-cương-học-phần)
+    * [API lấy toàn bộ đề cương học phần](#api-lấy-toàn-bộ-đề-cương-học-phần)
+    * [API cập nhật đề cương cho học phần](#api-cập-nhật-đề-cương-cho-học-phần)
+    * [API xóa đề cương của học phần](#api-xóa-đề-cương-của-học-phần)
+    * [API thêm học phần bắt buộc cho 1 học phần](#api-thêm-học-phần-bắt-buộc-cho-1-học-phần)
+    * [API xóa học phần bắt buộc](#api-xóa-học-phần-bắt-buộc)
+    * [API tìm kiếm đề cương học phần theo tên](#api-tìm-kiếm-để-cương-học-phần-theo-tên)
+    * [API lấy đề cương học phần theo id](#api-lấy-để-cương-học-phần-theo-id)
+* [Đào tạo (Training)](#đào-tạo-training)
+    * [API tạo kế hoạch đào tạo](#api-tạo-kế-hoạch-đào-tạo)
+    * [API cập nhật chương trình đào tạo](#api-cập-nhật-chương-trình-đào-tạo)
+    * [API lấy danh sách chương trình đào tạo](#api-lấy-danh-sách-chương-trình-đào-tạo)
+    * [API lấy chương trình đào tạo theo id](#api-lấy-chương-trình-đào-tạo-theo-id)
+    * [API xóa chương trình đào tạo](#api-xóa-chương-trình-đào-tạo)
+    * [API thêm khối kiến thức vào chương trình đào tạo](#api-thêm-khối-kiến-thức-vào-chương-trình-đào-tạo)
+    * [API xóa khối kiến thức của chương trình đào tạo](#api-xóa-khối-kiến-thức-của-chương-trình-đào-tạo)
+    * [API tìm kiếm chương trình đào tạo theo tên](#api-tìm-kiếm-chương-trình-đào-tạo-theo-tên)
+    * [API tạo kế hoạch giảng dạy](#api-tạo-kế-hoạch-giảng-dạy)
+    * [API lấy danh sách kế hoạch đào tạo](#api-lấy-danh-sách-kế-hoạch-đào-tạo)
 ## Yêu cầu
 
 * Java 21
@@ -67,7 +101,6 @@
 ## API Endpoint
 
 * **URL mặc định:** `http://localhost:3001/api`
-
 ### Xác thực (Auth)
 
 * ***API đăng ký (register):*** Ứng dụng chỉ dùng cho 1 tài khoản admin duy nhất được tạo sẵn khi khởi động server.
