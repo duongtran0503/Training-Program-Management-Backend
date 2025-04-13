@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface LecturerRepository extends JpaRepository<Lecturer,String> {
     boolean existsByLecturerCode(String lecturerCode);
     List<Lecturer> findAllByName(String name);
+    List<Lecturer> findByStatus(boolean status);
 }

@@ -15,7 +15,16 @@ public enum ErrorCode {
     USER_NOT_EXISTED(HttpStatus.NOT_FOUND, "Người dùng không tồn tại",false ),
     UNAUTHENTICATED(HttpStatus.UNAUTHORIZED, "Không thể xác thực", false),
     UNAUTHORIZED(HttpStatus.FORBIDDEN, "Bạn không có quyền truy cập",false ),
-    LECTURER_CODE_EXISTED(HttpStatus.CONFLICT,"Mã giảng viên đã tồn tại",false)
+    LECTURER_CODE_EXISTED(HttpStatus.CONFLICT,"Mã giảng viên đã tồn tại",false),
+    LECTURER_NOT_EXIST(HttpStatus.CONFLICT,"Mã giảng viên không tồn tại",false),
+    COURSE_EXISTED(HttpStatus.CONFLICT,"Học phần đã tồn tại!",false),
+    COURSE_NOT_EXIST(HttpStatus.BAD_REQUEST,"Học phần không tồn tại!",false),
+    COURSE_SYLLABUS_NOT_EXIST(HttpStatus.BAD_REQUEST,"Đề cương học phần không tồn tại! ",false),
+    TRAINING_PROGRAM_EXISTED(HttpStatus.BAD_REQUEST,"Đề cương học phần đã tồn tại! ",false),
+    TRAINING_PROGRAM_NOT_EXIST(HttpStatus.BAD_REQUEST,"Đề cương học phần không tồn tại! ",false),
+    KNOWLEDGE_BLOCK_EXISED(HttpStatus.BAD_REQUEST,"Đề cương đã tồn tại! ",false),
+    TEACHING_PLAN_EXISTED(HttpStatus.CONFLICT,"kế hoạch đào tạo đã tồn tại!",false),
+    TEACHING_PLAN_NOT_EXIST(HttpStatus.CONFLICT,"kế hoạch đào tạo không tồn tại!",false),
     ;
 
     private HttpStatusCode statusCode;

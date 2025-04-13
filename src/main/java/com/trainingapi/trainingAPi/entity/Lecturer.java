@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -45,11 +46,11 @@ public class Lecturer {
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    Date updateAt;
+    LocalDateTime updateAt;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false,nullable = false)
-    Date createAt;
+    LocalDateTime  createAt;
 
 }

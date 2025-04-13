@@ -50,6 +50,12 @@ public class UserService {
          return  lecturerRepository.findAll().stream().map(userMapper::toLecturerResponse).toList();
     }
 
+    public LecturerResponse getLecturerById(String id) {
+        var lecturer =lecturerRepository.findById(id)
+                .orElseThrow(()->new AppException(ErrorCode.LECTURER_NOT_EXIST));
+      return userMapper.toLecturerResponse(lecturer);
+    }
+
     public  LecturerResponse updateLecturer(UpdateLecturerRequest request,String id) {
        var lecturer = lecturerRepository.findById(id).orElseThrow(()->new AppException(ErrorCode.USER_NOT_EXISTED));
        if(lecturerRepository.existsByLecturerCode(request.getLecturerCode()))
@@ -67,14 +73,10 @@ public class UserService {
         lecturerRepository.save(lecturer);
     }
 
-    public  LecturerResponse getLecturerById(String id) {
-        var lecturer = lecturerRepository.findById(id).orElseThrow(()->new AppException(ErrorCode.USER_NOT_EXISTED));
-        return  userMapper.toLecturerResponse(lecturer);
-    }
-
     public List<LecturerResponse> findLecturerByName(String name) {
 
         return  lecturerRepository.findAllByName(name).stream().map(userMapper::toLecturerResponse).toList();
 
     }
+
 }
