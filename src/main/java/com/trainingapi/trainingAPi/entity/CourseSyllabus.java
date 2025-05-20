@@ -20,7 +20,6 @@ import java.util.List;
 @Builder
 public class CourseSyllabus {
   @Id
-
    @Column(name = "syllabus_id")
    String syllabusId;
    String syllabusContent;
@@ -34,24 +33,22 @@ public class CourseSyllabus {
    @Column(columnDefinition = "INT DEFAULT 0")
    int credit;
 
-   @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
-   boolean status;
+   @Column(columnDefinition = "INT DEFAULT 1")
+   int status;
 
    @OneToOne(mappedBy = "courseSyllabus",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
    @Fetch(FetchMode.JOIN)
    EvaluationComponents evaluationComponents;
 
+   @ManyToOne(fetch = FetchType.EAGER)
+   @Fetch(FetchMode.JOIN)
+   @JoinColumn(name = "course_code", referencedColumnName = "course_code")
+   private Course courseCode;
 
- @ManyToOne(fetch = FetchType.EAGER)
- @Fetch(FetchMode.JOIN)
- @JoinColumn(name = "course_code", referencedColumnName = "course_code")
- private Course courseCode;
+   @UpdateTimestamp
+   LocalDateTime updateAt;
 
-
- @UpdateTimestamp
- LocalDateTime updateAt;
-
- @CreationTimestamp
- @Column(updatable = false, nullable = false)
- LocalDateTime  createAt;
+   @CreationTimestamp
+   @Column(updatable = false, nullable = false)
+   LocalDateTime  createAt;
 }

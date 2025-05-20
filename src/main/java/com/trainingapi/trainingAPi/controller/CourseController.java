@@ -4,13 +4,16 @@ import com.trainingapi.trainingAPi.dto.request.*;
 import com.trainingapi.trainingAPi.dto.response.ApiResponse;
 import com.trainingapi.trainingAPi.dto.response.CourseResponse;
 import com.trainingapi.trainingAPi.dto.response.CourseSyllabusResponse;
+import com.trainingapi.trainingAPi.entity.Course;
 import com.trainingapi.trainingAPi.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,54 +25,64 @@ public class CourseController {
     CourseService courseService;
 
     @PostMapping
-    public ApiResponse<CourseResponse> createCourse(@RequestBody @Valid CreateCourseRequest request) {
-        return  ApiResponse.<CourseResponse>builder()
-                .isSuccess(true)
+    public ApiResponse<Course> createCourse(@Valid @RequestBody CreateCourseRequest request) {
+        return ApiResponse.<Course>builder()
+                .data(courseService.createCourse(request))
                 .statusCode(200)
-                .data(courseService.CreateCourse(request))
+                .isSuccess(true)
+                .message("OK")
                 .build();
     }
 
     @GetMapping
-    public ApiResponse<List<CourseResponse>> getAllCourse() {
-        return  ApiResponse.<List<CourseResponse>>builder()
-                .isSuccess(true)
+    public ApiResponse<List<Course>> getAllCourses() {
+        return ApiResponse.<List<Course>>builder()
+                .data(courseService.getAllCourses())
                 .statusCode(200)
-                .data(courseService.getAllCourse())
+                .isSuccess(true)
+                .message("OK")
                 .build();
     }
 
-    @GetMapping("/{id}")
-    public ApiResponse<CourseResponse> getCourseByCourseCode(@PathVariable String id) {
-        return  ApiResponse.<CourseResponse>builder()
-                .isSuccess(true)
+    @GetMapping("/{courseCode}")
+    public ApiResponse<Course> getCourseByCode(@PathVariable String courseCode) {
+        return ApiResponse.<Course>builder()
+                .data(courseService.getCourseByCode(courseCode))
                 .statusCode(200)
-                .data(courseService.getCourseByCourseCode(id))
+                .isSuccess(true)
+                .message("OK")
                 .build();
     }
 
     @GetMapping("/search")
-    public ApiResponse<List<CourseResponse>> searchCourseByName(@RequestParam(name = "name",required = false,defaultValue = "") String name ) {
-        return  ApiResponse.<List<CourseResponse>>builder()
-                .isSuccess(true)
+    public ApiResponse<List<Course>> searchCourses(@RequestParam String name) {
+        return ApiResponse.<List<Course>>builder()
+                .data(courseService.searchCourses(name))
                 .statusCode(200)
-                .data(courseService.getCourseByName(name))
+                .isSuccess(true)
+                .message("OK")
                 .build();
     }
 
-    @DeleteMapping("/{id}")
-    public  ApiResponse<Void> deleteCourse(@PathVariable String id) {
-        courseService.deleteCourse(id);
-        return ApiResponse.<Void>builder().isSuccess(true).statusCode(200).message("OK").build();
-    }
-
-    @PutMapping("/{id}")
-    public ApiResponse<CourseResponse> updateCourse(@Valid @RequestBody UpdateCourseRequest request
-            ,@PathVariable String id) {
-        return  ApiResponse.<CourseResponse>builder()
+    @DeleteMapping("/{courseCode}")
+    public ApiResponse<Void> deleteCourse(@PathVariable String courseCode) {
+        courseService.deleteCourse(courseCode);
+        return ApiResponse.<Void>builder()
                 .statusCode(200)
                 .isSuccess(true)
-                .data(courseService.updateCourse(request,id))
+                .message("OK")
+                .build();
+    }
+
+    @PutMapping("/{courseCode}")
+    public ApiResponse<Course> updateCourse(
+            @PathVariable String courseCode,
+            @Valid @RequestBody UpdateCourseRequest request) {
+        return ApiResponse.<Course>builder()
+                .data(courseService.updateCourse(courseCode, request))
+                .statusCode(200)
+                .isSuccess(true)
+                .message("OK")
                 .build();
     }
 
@@ -131,23 +144,37 @@ public class CourseController {
                 .build();
     }
 
-    @PostMapping("/prerequisites/{id}")
-    public ApiResponse<CourseResponse> addPrerequisite(@RequestBody AddPrerequisitesRequest request
-    ,@PathVariable String id) {
-      return  ApiResponse.<CourseResponse>builder()
-              .isSuccess(true)
-              .statusCode(200)
-              .data(courseService.addPrerequisites(id,request))
-              .build();
+    @PostMapping("/prerequisites/{courseCode}")
+    public ApiResponse<Course> addPrerequisites(
+            @PathVariable String courseCode,
+            @RequestBody List<String> prerequisiteCodes) {
+        return ApiResponse.<Course>builder()
+                .data(courseService.addPrerequisites(courseCode, prerequisiteCodes))
+                .statusCode(200)
+                .isSuccess(true)
+                .message("OK")
+                .build();
     }
 
-    @DeleteMapping("/prerequisites/{id}")
-    public  ApiResponse<CourseResponse> deletePrerequisite(@RequestBody DeletePrerequisitesRequest request
-    ,@PathVariable String id) {
-       return  ApiResponse.<CourseResponse>builder()
-               .isSuccess(true)
-               .statusCode(200)
-               .data(courseService.deletePrerequisite(id,request))
-               .build();
+    @DeleteMapping("/prerequisites/{courseCode}/{prerequisiteCode}")
+    public ApiResponse<Course> removePrerequisite(
+            @PathVariable String courseCode,
+            @PathVariable String prerequisiteCode) {
+        return ApiResponse.<Course>builder()
+                .data(courseService.removePrerequisite(courseCode, prerequisiteCode))
+                .statusCode(200)
+                .isSuccess(true)
+                .message("OK")
+                .build();
+    }
+
+    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ApiResponse<Void> importCourses(@RequestParam("file") MultipartFile file) {
+        courseService.importCourses(file);
+        return ApiResponse.<Void>builder()
+                .statusCode(200)
+                .isSuccess(true)
+                .message("Import thành công")
+                .build();
     }
 }

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LecturerRepository extends JpaRepository<Lecturer,String> {
+public interface LecturerRepository extends JpaRepository<Lecturer, String> {
+    Optional<Lecturer> findByLecturerCode(String lecturerCode);
     boolean existsByLecturerCode(String lecturerCode);
-    List<Lecturer> findAllByName(String name);
-    List<Lecturer> findByStatus(boolean status);
+    List<Lecturer> findByNameContainingIgnoreCase(String name);
 }

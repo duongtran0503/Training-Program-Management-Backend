@@ -74,10 +74,11 @@ public class UserService {
         lecturerRepository.save(lecturer);
     }
 
-    public List<LecturerResponse> findLecturerByName(String name) {
-
-        return  lecturerRepository.findAllByName(name).stream().map(userMapper::toLecturerResponse).toList();
-
+    public List<LecturerResponse> searchLecturer(String name) {
+        return lecturerRepository.findByNameContainingIgnoreCase(name)
+                .stream()
+                .map(userMapper::toLecturerResponse)
+                .toList();
     }
 
 }

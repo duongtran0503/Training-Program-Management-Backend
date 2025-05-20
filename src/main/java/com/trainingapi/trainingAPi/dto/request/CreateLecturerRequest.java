@@ -1,25 +1,32 @@
 package com.trainingapi.trainingAPi.dto.request;
 
-import com.trainingapi.trainingAPi.annotations.ValidValueStringDefine;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-@Getter
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Data
 public class CreateLecturerRequest {
-    String name;
-    String lecturerCode;
-    @ValidValueStringDefine(values={"nam","nữ"},message = "DATA_REQUEST_INVALID")
-    String gender;
-    @ValidValueStringDefine(values={"tiến sĩ","giáo sư"},message = "DATA_REQUEST_INVALID")
-    String titleAcademicRank;
-    String avatar;
-    String department;
-    boolean status;
-    Date dob;
-    Date startDateOfTeaching;
+    @NotBlank(message = "Tên giảng viên không được để trống")
+    private String name;
 
+    @NotBlank(message = "Mã giảng viên không được để trống")
+    private String lecturerCode;
+
+    @NotBlank(message = "Giới tính không được để trống")
+    private String gender;
+
+    private String titleAcademicRank;
+    private String avatar;
+    private String department;
+
+    @NotNull(message = "Trạng thái không được để trống")
+    private Boolean status;
+
+    @NotNull(message = "Ngày sinh không được để trống")
+    private LocalDate dob;
+
+    @NotNull(message = "Ngày bắt đầu giảng dạy không được để trống")
+    private LocalDate startDateOfTeaching;
 }

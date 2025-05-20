@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface CourseSyllabusRepository extends JpaRepository<CourseSyllabus,String> {
-   List<CourseSyllabus> findByStatus(boolean status);
+   List<CourseSyllabus> findByStatus(int status);
 
-   @Query("SELECT c FROM CourseSyllabus c WHERE  LOWER(c.syllabusContent) LIKE LOWER(CONCAT('%', :keyword, '%')) AND c.status = true")
+   @Query("SELECT c FROM CourseSyllabus c WHERE  LOWER(c.syllabusContent) LIKE LOWER(CONCAT('%', :keyword, '%')) AND c.status = 1")
    List<CourseSyllabus> searchCourseSyllabusByNameAndStatusIsTrue(@Param("keyword") String keyword);
 
 }

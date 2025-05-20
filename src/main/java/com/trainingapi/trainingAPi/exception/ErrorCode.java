@@ -25,6 +25,7 @@ public enum ErrorCode {
     KNOWLEDGE_BLOCK_EXISED(HttpStatus.BAD_REQUEST,"Đề cương đã tồn tại! ",false),
     TEACHING_PLAN_EXISTED(HttpStatus.CONFLICT,"kế hoạch đào tạo đã tồn tại!",false),
     TEACHING_PLAN_NOT_EXIST(HttpStatus.CONFLICT,"kế hoạch đào tạo không tồn tại!",false),
+    INVALID_FILE(HttpStatus.BAD_REQUEST, "File không hợp lệ", false),
     ;
 
     private HttpStatusCode statusCode;

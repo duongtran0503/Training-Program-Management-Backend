@@ -6,6 +6,7 @@ import com.trainingapi.trainingAPi.dto.response.AuthenticationResponse;
 import com.trainingapi.trainingAPi.repository.UserRepository;
 import com.trainingapi.trainingAPi.service.AuthenticationService;
 import com.trainingapi.trainingAPi.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,7 +23,7 @@ public class AuthenticationController {
      AuthenticationService authenticationService;
 
      @PostMapping("/login")
-     public ApiResponse<AuthenticationResponse> login(@RequestBody LoginRequest request) {
+     public ApiResponse<AuthenticationResponse> login(@Valid @RequestBody LoginRequest request) {
       return  ApiResponse.<AuthenticationResponse>builder().data(authenticationService.login(request))
               .statusCode(200)
               .isSuccess(true)
