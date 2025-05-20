@@ -18,6 +18,7 @@ public class CreateCourseSyllabusRequest {
      int theory = 0;
      int practice = 0;
      int credit = 0;
+     int status = 1;
     @Valid
      CreateEvaluationComponentsRequest evaluationComponents;
     @Data

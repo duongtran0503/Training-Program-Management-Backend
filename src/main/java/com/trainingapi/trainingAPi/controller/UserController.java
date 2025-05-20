@@ -38,7 +38,7 @@ public class UserController {
                  .build();
     }
 
-    @GetMapping("/lecturer/get-all")
+    @GetMapping("/list-lecturers")
     public ApiResponse<List<LecturerResponse>> getAllLecturer() {
           return  ApiResponse.<List<LecturerResponse>>builder()
                   .data(userService.getAllLecturer())
@@ -47,7 +47,7 @@ public class UserController {
                   .build();
     }
 
-    @PutMapping("/lecturer/{id}")
+    @PutMapping("/update-lecturer/{id}")
     public ApiResponse<LecturerResponse> updateLecturer(@Valid @RequestBody UpdateLecturerRequest request,@PathVariable String id){
          return  ApiResponse.<LecturerResponse>builder()
                  .isSuccess(true)
@@ -56,16 +56,16 @@ public class UserController {
                  .build();
     }
 
-    @DeleteMapping("/lecturer/{id}")
+    @DeleteMapping("/delete-lecturer/{id}")
     public  ApiResponse<Void> deleteLecturer(@PathVariable String id) {
          userService.deleteLecturer(id);
          return ApiResponse.<Void>builder().isSuccess(true).message("delete success").statusCode(200).build();
     }
 
-    @GetMapping("/lecturer/search")
+    @GetMapping("/search-lecturer")
     public  ApiResponse<List<LecturerResponse>> findLecturerByName( @RequestParam(value = "name", required = false) String name){
          return ApiResponse.<List<LecturerResponse>>builder().statusCode(200).isSuccess(true)
-                 .data(userService.findLecturerByName(name)).build();
+                 .data(userService.searchLecturer(name)).build();
     }
 
 }

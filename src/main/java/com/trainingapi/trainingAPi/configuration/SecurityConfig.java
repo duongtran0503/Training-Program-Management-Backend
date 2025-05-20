@@ -24,9 +24,36 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINTS_POST = {
-            "/api/auth/login", "/api/auth/introspect"
+            "/api/auth/login", "/api/auth/introspect",
+            "/api/users/lecturer", "/api/users/lecturer-account",
+            "/api/courses", "/api/courses/course-syllabus/{id}", "/api/courses/prerequisites/{courseCode}"
     };
-    private  final  String[]  PUBLIC_ENDPOINTS_GET = {"/auth/hello"};
+    private final String[] PUBLIC_ENDPOINTS_GET = {
+            "/api/auth/hello",
+            "/api/users/lecturer/get-all",
+            "/api/users/lecturer/{id}",
+            "/api/users/lecturer/search",
+            "/api/users/list-lecturers",
+            "/api/users/search-lecturer",
+            "/api/courses",
+            "/api/courses/{courseCode}",
+            "/api/courses/search",
+            "/api/courses/course-syllabus",
+            "/api/courses/course-syllabus/{id}",
+            "/api/courses/course-syllabus/search"
+    };
+    private final String[] PUBLIC_ENDPOINTS_PUT = {
+            "/api/users/lecturer/{id}",
+            "/api/users/update-lecturer/{id}",
+            "/api/courses/{courseCode}",
+            "/api/courses/course-syllabus/{id}"
+    };
+    private final String[] PUBLIC_ENDPOINTS_DELETE = {
+            "/api/users/lecturer/{id}",
+            "/api/users/delete-lecturer/{id}",
+            "/api/courses/{courseCode}",
+            "/api/courses/course-syllabus/{id}"
+    };
 
     @Value("${jwt.signerKey}")
     private  String signerKey;
@@ -36,7 +63,9 @@ public class SecurityConfig {
        httpSecurity.authorizeHttpRequests(request->
                 request.requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS_POST).permitAll()
                         .requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINTS_GET).permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.PUT,PUBLIC_ENDPOINTS_PUT).permitAll()
+                        .requestMatchers(HttpMethod.DELETE,PUBLIC_ENDPOINTS_DELETE).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                         .anyRequest()
                         .authenticated()
                );
@@ -63,8 +92,8 @@ public class SecurityConfig {
     @Bean
    public  CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Loại bỏ khoảng trắng
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Chỉ định các phương thức
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:3001")); 
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); 
         corsConfiguration.addAllowedHeader("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", corsConfiguration);

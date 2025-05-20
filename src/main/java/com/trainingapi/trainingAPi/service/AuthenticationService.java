@@ -39,12 +39,9 @@ public class AuthenticationService {
       public AuthenticationResponse login(LoginRequest request) {
            var user = userRepository.findByUsername(request.getUsername())
                    .orElseThrow(()->new AppException(ErrorCode.USER_NOT_EXISTED));
-
            boolean isAuthenticated = passwordEncoder.matches(request.getPassword(),user.getPassword());
-
            if(!isAuthenticated)
                throw  new AppException(ErrorCode.UNAUTHENTICATED);
-
            String token = generateToken(user);
            return  AuthenticationResponse.builder().token(token).build();
       }

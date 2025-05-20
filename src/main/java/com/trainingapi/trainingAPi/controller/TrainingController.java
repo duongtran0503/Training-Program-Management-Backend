@@ -82,7 +82,7 @@ public class TrainingController {
     }
 
    @PostMapping("/knowledge-block")
-    public ApiResponse<KnowledgeBlockResponse> craateKnowLedgeBlock(@Valid @RequestBody CreateKnowledgeBlockRequest request) {
+    public ApiResponse<KnowledgeBlockResponse> createKnowLedgeBlock(@Valid @RequestBody CreateKnowledgeBlockRequest request) {
         return  ApiResponse.<KnowledgeBlockResponse>builder()
                 .isSuccess(true)
                 .statusCode(200)
