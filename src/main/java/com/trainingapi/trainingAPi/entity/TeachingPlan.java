@@ -3,10 +3,10 @@ package com.trainingapi.trainingAPi.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,16 +19,18 @@ public class TeachingPlan {
     @Id
     @Column(name = "teaching_plan_id")
     String teachingPlanId;
-    int semester;
+
     int academicYear;
+    int semester;
 
-    @OneToMany(mappedBy = "teachingPlan",cascade =CascadeType.ALL,fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
-    List<Course> courses;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "training_program_id")
+    TrainingProgram trainingProgram;
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @Fetch(FetchMode.JOIN)
-   @JoinColumn(name = "training_program_id",referencedColumnName = "training_program_id")
-   TrainingProgram trainingProgram;
+    @UpdateTimestamp
+    LocalDateTime updateAt;
 
+    @CreationTimestamp
+    @Column(updatable = false, nullable = false)
+    LocalDateTime createAt;
 }

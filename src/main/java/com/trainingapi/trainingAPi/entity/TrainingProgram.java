@@ -20,7 +20,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TrainingProgram {
     @Id
-     @Column(name = "training_program_id")
+    @Column(name = "training_program_id")
     String trainingProgramId;
     String trainingProgramName;
     String educationLevel;
@@ -38,11 +38,11 @@ public class TrainingProgram {
 
     String issuingDecision;
 
-    @OneToMany(mappedBy = "trainingProgram",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "trainingProgram", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     List<TeachingPlan> teachingPlans;
 
-    @OneToMany(mappedBy = "trainingProgram",cascade ={CascadeType.REMOVE,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH},fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "trainingProgram", cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @Fetch(FetchMode.JOIN)
     List<KnowledgeBlock> knowledgeBlocks;
 
@@ -52,6 +52,4 @@ public class TrainingProgram {
     @CreationTimestamp
     @Column(updatable = false, nullable = false)
     LocalDateTime createAt;
-
-
 }

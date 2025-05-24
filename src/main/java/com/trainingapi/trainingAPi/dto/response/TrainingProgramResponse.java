@@ -31,6 +31,6 @@ public class TrainingProgramResponse {
 
     @Data
     public  static  class TeachingPlanResponse {
-       private String teachingPlanId;
+        private String teachingPlanId;
     }
 }

@@ -6,7 +6,7 @@ import com.trainingapi.trainingAPi.dto.request.UpdateTrainingProgramRequest;
 import com.trainingapi.trainingAPi.dto.response.KnowledgeBlockResponse;
 import com.trainingapi.trainingAPi.dto.response.TrainingProgramResponse;
 import com.trainingapi.trainingAPi.entity.KnowledgeBlock;
-import com.trainingapi.trainingAPi.entity.KnowledgeBlockDetail;
+import com.trainingapi.trainingAPi.entity.TeachingPlan;
 import com.trainingapi.trainingAPi.entity.TrainingProgram;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,19 +16,22 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface TrainingProgramMapper {
     @Mappings({
-            @Mapping(target = "website",constant = "https://fit.sgu.edu.vn/site/"),
-            @Mapping(target = "status",constant = "true")
+            @Mapping(target = "website", constant = "https://fit.sgu.edu.vn/site/"),
+            @Mapping(target = "status", constant = "true")
     })
-   TrainingProgram toTrainingProgram(CreateTrainingProgramRequest request);
+    TrainingProgram toTrainingProgram(CreateTrainingProgramRequest request);
+
     @Mappings({
-            @Mapping(target = "status",source = "status"),
-            @Mapping(target = "teachingPlanResponses",source = "teachingPlans"),
-            @Mapping(target = "knowledgeBlocks",source = "knowledgeBlocks")
-
+            @Mapping(target = "status", source = "status"),
+            @Mapping(target = "teachingPlanResponses", source = "teachingPlans"),
+            @Mapping(target = "knowledgeBlocks", source = "knowledgeBlocks")
     })
-   TrainingProgramResponse toTrainingProgramResponse(TrainingProgram trainingProgram);
+    TrainingProgramResponse toTrainingProgramResponse(TrainingProgram trainingProgram);
 
-   void updateTrainingProgram(@MappingTarget TrainingProgram trainingProgram, UpdateTrainingProgramRequest request);
+    // Thêm phương thức ánh xạ TeachingPlan -> TeachingPlanResponse
+    TrainingProgramResponse.TeachingPlanResponse toTeachingPlanResponse(TeachingPlan teachingPlan);
+
+    void updateTrainingProgram(@MappingTarget TrainingProgram trainingProgram, UpdateTrainingProgramRequest request);
 
     @Mappings({
             @Mapping(target = "knowledgeBlockDetailResponses", source = "knowledgeBlockDetails"),
