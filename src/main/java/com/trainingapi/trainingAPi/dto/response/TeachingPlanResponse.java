@@ -1,20 +1,19 @@
 package com.trainingapi.trainingAPi.dto.response;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 public class TeachingPlanResponse {
     String teachingPlanId;
-    int semester;
     int academicYear;
-    String academicYearString;
-
-    List<CourseResponse> courseResponse;
+    int semester;
+    String trainingProgramId;
+    LocalDateTime updateAt;
+    LocalDateTime createAt;
 }

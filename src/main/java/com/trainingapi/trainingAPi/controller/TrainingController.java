@@ -1,10 +1,8 @@
 package com.trainingapi.trainingAPi.controller;
 
-import com.trainingapi.trainingAPi.dto.request.CreateKnowledgeBlockRequest;
 import com.trainingapi.trainingAPi.dto.request.CreateTrainingProgramRequest;
 import com.trainingapi.trainingAPi.dto.request.UpdateTrainingProgramRequest;
 import com.trainingapi.trainingAPi.dto.response.ApiResponse;
-import com.trainingapi.trainingAPi.dto.response.KnowledgeBlockResponse;
 import com.trainingapi.trainingAPi.dto.response.TrainingProgramResponse;
 import com.trainingapi.trainingAPi.service.TrainingService;
 import jakarta.validation.Valid;
@@ -16,89 +14,77 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
-@RequestMapping("/api/trainings")
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@RequestMapping("/api/training-programs")
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class TrainingController {
     TrainingService trainingService;
 
     @PostMapping
     public ApiResponse<TrainingProgramResponse> createTrainingProgram(@Valid @RequestBody CreateTrainingProgramRequest request) {
-     return   ApiResponse.<TrainingProgramResponse>builder()
-             .isSuccess(true)
-             .statusCode(200)
-             .data(trainingService.createTrainingProgram(request))
-             .build();
+        TrainingProgramResponse response = trainingService.createTrainingProgram(request);
+        log.info("Created training program: {}", response);
+        return ApiResponse.<TrainingProgramResponse>builder()
+                .data(response)
+                .statusCode(200)
+                .isSuccess(true)
+                .message("OK")
+                .build();
     }
 
     @GetMapping
-    public  ApiResponse<List<TrainingProgramResponse>> getAllTrainingProgram() {
+    public ApiResponse<List<TrainingProgramResponse>> getAllTrainingPrograms() {
+        List<TrainingProgramResponse> programs = trainingService.getAllTrainingPrograms();
+        log.info("Fetched training programs: {}", programs);
         return ApiResponse.<List<TrainingProgramResponse>>builder()
-                .isSuccess(true)
+                .data(programs)
                 .statusCode(200)
-                .data(trainingService.getAllTrainingProgram())
+                .isSuccess(true)
+                .message("OK")
                 .build();
     }
 
-    @GetMapping("{id}")
-    public  ApiResponse<TrainingProgramResponse> getTrainingProgramById(@PathVariable String id) {
-        return  ApiResponse.<TrainingProgramResponse>builder()
-                .statusCode(200)
-                .isSuccess(true)
+    @GetMapping("/{id}")
+    public ApiResponse<TrainingProgramResponse> getTrainingProgramById(@PathVariable String id) {
+        return ApiResponse.<TrainingProgramResponse>builder()
                 .data(trainingService.getTrainingProgramById(id))
+                .statusCode(200)
+                .isSuccess(true)
+                .message("OK")
                 .build();
     }
 
-    @GetMapping("/search")
-    public ApiResponse<List<TrainingProgramResponse>> getTrainingProgramByName(
-            @RequestParam(name = "name",defaultValue = "",required = false) String name
-    ) {
-        return  ApiResponse.<List<TrainingProgramResponse>>builder()
-                .isSuccess(true)
+    @PutMapping("/{id}")
+    public ApiResponse<TrainingProgramResponse> updateTrainingProgram(
+            @PathVariable String id,
+            @Valid @RequestBody UpdateTrainingProgramRequest request) {
+        return ApiResponse.<TrainingProgramResponse>builder()
+                .data(trainingService.updateTrainingProgram(id, request))
                 .statusCode(200)
-                .data(trainingService.getTrainingProgramByName(name))
-                .build();
-    }
-
-    @PutMapping
-    public  ApiResponse<TrainingProgramResponse> updateTrainingProgram(@Valid @RequestBody UpdateTrainingProgramRequest request) {
-        return  ApiResponse.<TrainingProgramResponse>builder()
                 .isSuccess(true)
-                .statusCode(200)
-                .data(trainingService.updateTrainingProgram(request))
+                .message("OK")
                 .build();
     }
 
     @DeleteMapping("/{id}")
-    public  ApiResponse<Void> deleteTrainingProgram(@PathVariable String id) {
-         trainingService.deleteTrainingProgram(id);
-         return  ApiResponse.<Void>builder()
-                 .statusCode(200)
-                 .isSuccess(true)
-                 .message("OK")
-                 .build();
-    }
-
-   @PostMapping("/knowledge-block")
-    public ApiResponse<KnowledgeBlockResponse> createKnowLedgeBlock(@Valid @RequestBody CreateKnowledgeBlockRequest request) {
-        return  ApiResponse.<KnowledgeBlockResponse>builder()
-                .isSuccess(true)
-                .statusCode(200)
-                .data(trainingService.createKnowledgeBlock(request))
-                .build();
-   }
-
-   @DeleteMapping("/knowledge/{id}")
-    public ApiResponse<Void> deleteKnowledgeBlock(@PathVariable String id) {
-
-        trainingService.deleteKnowledgeBlock(id);
+    public ApiResponse<Void> deleteTrainingProgram(@PathVariable String id) {
+        trainingService.deleteTrainingProgram(id);
         return ApiResponse.<Void>builder()
+                .statusCode(200)
                 .isSuccess(true)
                 .message("OK")
-                .statusCode(200)
                 .build();
-   }
+    }
 
+    @GetMapping("/search")
+    public ApiResponse<List<TrainingProgramResponse>> searchTrainingPrograms(@RequestParam String name) {
+        return ApiResponse.<List<TrainingProgramResponse>>builder()
+                .data(trainingService.searchTrainingPrograms(name))
+                .statusCode(200)
+                .isSuccess(true)
+                .message("OK")
+                .build();
+    }
 }
